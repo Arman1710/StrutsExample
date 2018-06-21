@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+        "http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+
+    <form-beans>
+        <form-bean name="newsForm"
+                   type="epam.form.NewsForm">
+        </form-bean>
+
+        <form-bean name="commentsForm"
+                   type="epam.form.CommentsForm">
+        </form-bean>
+
+    </form-beans>
+
+    <action-mappings>
+
+        <action path="/main"
+                type="epam.action.ShowAllNewsAction"
+                name="newsForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/pages/main.jsp"/>
+        </action>
+
+        <action path="/selectedNews"
+                type="epam.action.SelectedNewsAction"
+                name="newsForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/pages/selectedNews.jsp"/>
+        </action>
+
+        <action path="/addNews"
+                type="epam.action.AddNewsAction"
+                name="newsForm"
+                validate="true"
+                input="/pages/addNews.jsp"
+                scope="request">
+            <forward name="success" path="/pages/index.jsp"/>
+        </action>
+
+        <action path="/addComments"
+                type="epam.action.CreateCommentAction"
+                name="commentsForm"
+                validate="true"
+                input="/pages/selectedNews.jsp"
+                scope="request">
+            <forward name="success" path="/selectedNews.do"/>
+        </action>
+
+        <action path="/deleteComment"
+                type="epam.action.DeleteCommentAction"
+                name="newsForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/selectedNews.do"/>
+        </action>
+
+        <action path="/deleteNews"
+                type="epam.action.DeleteNewsAction"
+                name="newsForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/pages/index.jsp"/>
+        </action>
+
+        <action path="/editNews"
+                type="epam.action.EditNewsAction"
+                name="newsForm"
+                validate="false"
+                scope="request">
+            <forward name="success" path="/pages/addNews.jsp"/>
+        </action>
+
+    </action-mappings>
+
+    <message-resources parameter="locale" />
+
+</struts-config>
