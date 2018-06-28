@@ -3,52 +3,87 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
 <%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="tagFile" tagdir="/WEB-INF/tags" %>
 
 <html>
 <head>
-    <title><bean:message key="addNews"/> </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <title><bean:message key="addNews"/></title>
 </head>
 <body>
-<html:form action="/addNews?newsId=${newsForm.newsId}">
-    <table border="0">
-        <thead>
-        <tr>
-        </tr>
-        </thead>
-        <tbody>
-        <tr> </tr>
-        <tr>
-            <td><bean:message key="shortDesc"/></td>
-            <td><html:text property="shortDesc" value="${newsForm.shortDesc}"/></td>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/main.do"><bean:message key="mainPage"/></a>
+                </li>
 
-        </tr>
-        <tr>
-            <td><bean:message key="fullDesc"/></td>
-            <td><html:text property="fullDesc" value="${newsForm.fullDesc}">
-            </html:text></td>
-        </tr>
-        <tr>
-            <td></td>
-            <td><html:submit>
-                <bean:message key="submit"/>
-            </html:submit>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</html:form>
+            </ul>
+        </div>
+    </nav>
+</header>
 
-<html:messages id="short_er" property="shortDesc_err">
-    <div style="color:red">
-        <bean:write name="short_er" />
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">
+            <bean:message key="addNews"/>
+        </h1>
     </div>
-</html:messages>
+</section>
 
-<html:messages id="full_err" property="fullDesc_err">
-    <div style="color:red">
-        <bean:write name="full_err" />
+<main role="main">
+    <div class="container">
+        <html:form action="/addNews?newsId=${newsForm.newsId}">
+            <table border="0">
+                <thead>
+                <tr>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <br>
+                    <textarea name="title" id="title" cols="30" rows="1" style="word-wrap: break-word"  class="form-control mr-sm-2" type="textarea"
+                              placeholder="<bean:message key="title"/>" aria-label="Search"></textarea>
+                </tr>
+                <tr>
+                    <br>
+                    <textarea name="brief" id="brief" cols="30" rows="3" style="word-wrap: break-word"  class="form-control mr-sm-2" type="textarea"
+                              placeholder="<bean:message key="brief"/>" aria-label="Search"></textarea>
+                </tr>
+                <tr>
+                    <br>
+                    <textarea name="content" id="content" cols="30" rows="10" style="word-wrap: break-word" class="form-control mr-sm-2" type="textarea"
+                              placeholder="<bean:message key="content"/>" aria-label="Search"></textarea>
+                </tr>
+                <tr>
+                    <br>
+                    <td>
+                        <button type="submit" class="btn btn-primary btn-sm "><bean:message key="submit"/>&raquo;
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </html:form>
+
+        <tagFile:newsValidateErrors/>
+
     </div>
-</html:messages>
+</main>
 
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+        integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+        crossorigin="anonymous"></script>
 </body>
 </html>

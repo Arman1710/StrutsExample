@@ -6,9 +6,9 @@
     </root>
     <schema id="2" parent="1" name="ARMAN">
       <ObjectId>48</ObjectId>
-      <IntrospectionTimestamp>2018-06-13.20:21:45</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-06-28.15:09:58</IntrospectionTimestamp>
       <CreatedTimestamp>2018-06-13.20:21:37</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-06-28.15:09:56</ModifiedTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -66,16 +66,16 @@
     <table id="20" parent="2" name="COMMENTS">
       <ObjectId>20269</ObjectId>
       <CreatedTimestamp>2018-06-13.20:21:37</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-06-26.22:00:10</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
     <table id="21" parent="2" name="NEWS">
       <ObjectId>20271</ObjectId>
       <CreatedTimestamp>2018-06-13.20:21:37</CreatedTimestamp>
-      <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-06-28.15:09:56</ModifiedTimestamp>
       <TemporaryPreserve>1</TemporaryPreserve>
     </table>
-    <column id="22" parent="20" name="COMMENTSID">
+    <column id="22" parent="20" name="COMMENTID">
       <Position>1</Position>
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
@@ -112,13 +112,13 @@
     <key id="28" parent="20" name="SYS_C007282">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
-      <ColNames>COMMENTSID</ColNames>
+      <ColNames>COMMENTID</ColNames>
       <InitiallyDeferred>1</InitiallyDeferred>
       <UnderlyingIndexName>SYS_C007282</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
     <foreign-key id="29" parent="20" name="FKN1CXCI7FCOSMCJCW1EB2CNUO8">
-      <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-06-26.22:00:10</ModifiedTimestamp>
       <ColNames>NEWSID</ColNames>
       <RefSchemaName>ARMAN</RefSchemaName>
       <RefTableName>NEWS</RefTableName>
@@ -130,17 +130,23 @@
       <DataType>NUMBER(10 digit)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="31" parent="21" name="FULLDESC">
+    <column id="31" parent="21" name="CONTENT">
       <Position>2</Position>
-      <DataType>VARCHAR2(255 char)|0us</DataType>
+      <DataType>VARCHAR2(4000 byte)|0s</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>NULL</DefaultExpression>
     </column>
-    <column id="32" parent="21" name="SHORTDESC">
+    <column id="32" parent="21" name="BRIEF">
       <Position>3</Position>
-      <DataType>VARCHAR2(255 char)|0us</DataType>
+      <DataType>VARCHAR2(500 char)|0us</DataType>
       <NotNull>1</NotNull>
+      <DefaultExpression>NULL</DefaultExpression>
     </column>
-    <index id="33" parent="21" name="SYS_C007286">
+    <column id="33" parent="21" name="TITLE">
+      <Position>4</Position>
+      <DataType>VARCHAR2(100 byte)|0s</DataType>
+    </column>
+    <index id="34" parent="21" name="SYS_C007286">
       <ObjectId>20272</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2018-06-13.20:21:37</CreatedTimestamp>
@@ -149,7 +155,7 @@
       <ColNames>NEWSID</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="34" parent="21" name="SYS_C007286">
+    <key id="35" parent="21" name="SYS_C007286">
       <NameSurrogate>1</NameSurrogate>
       <ModifiedTimestamp>2018-06-13.20:21:37</ModifiedTimestamp>
       <ColNames>NEWSID</ColNames>

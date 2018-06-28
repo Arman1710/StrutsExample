@@ -10,8 +10,8 @@
                    type="epam.form.NewsForm">
         </form-bean>
 
-        <form-bean name="commentsForm"
-                   type="epam.form.CommentsForm">
+        <form-bean name="commentForm"
+                   type="epam.form.CommentForm">
         </form-bean>
 
     </form-beans>
@@ -19,65 +19,89 @@
     <action-mappings>
 
         <action path="/main"
-                type="epam.action.ShowAllNewsAction"
+                type="epam.action.DispatchAction"
                 name="newsForm"
                 validate="false"
-                scope="request">
+                scope="request"
+                parameter="showAllNews">
             <forward name="success" path="/pages/main.jsp"/>
         </action>
 
         <action path="/selectedNews"
-                type="epam.action.SelectedNewsAction"
+                type="epam.action.DispatchAction"
                 name="newsForm"
                 validate="false"
-                scope="request">
+                scope="request"
+                parameter="selectedNews">
             <forward name="success" path="/pages/selectedNews.jsp"/>
         </action>
 
         <action path="/addNews"
-                type="epam.action.AddNewsAction"
+                type="epam.action.DispatchAction"
                 name="newsForm"
                 validate="true"
                 input="/pages/addNews.jsp"
-                scope="request">
-            <forward name="success" path="/pages/index.jsp"/>
-        </action>
-
-        <action path="/addComments"
-                type="epam.action.CreateCommentAction"
-                name="commentsForm"
-                validate="true"
-                input="/pages/selectedNews.jsp"
-                scope="request">
-            <forward name="success" path="/selectedNews.do"/>
-        </action>
-
-        <action path="/deleteComment"
-                type="epam.action.DeleteCommentAction"
-                name="newsForm"
-                validate="false"
-                scope="request">
-            <forward name="success" path="/selectedNews.do"/>
-        </action>
-
-        <action path="/deleteNews"
-                type="epam.action.DeleteNewsAction"
-                name="newsForm"
-                validate="false"
-                scope="request">
-            <forward name="success" path="/pages/index.jsp"/>
+                scope="request"
+                parameter="addNews">
+        <forward name="success" path="/pages/index.jsp"/>
         </action>
 
         <action path="/editNews"
-                type="epam.action.EditNewsAction"
+                type="epam.action.DispatchAction"
+                name="newsForm"
+                validate="true"
+                input="/pages/editNews.jsp"
+                scope="request"
+                parameter="editNews">
+            <forward name="success" path="/pages/index.jsp"/>
+        </action>
+
+        <action path="/addComment"
+                type="epam.action.DispatchAction"
+                name="commentForm"
+                validate="true"
+                input="/selectedNews.do"
+                scope="request"
+                parameter="addComment">
+        <forward name="success" path="/selectedNews.do"/>
+        </action>
+
+        <action path="/deleteComment"
+                type="epam.action.DispatchAction"
                 name="newsForm"
                 validate="false"
-                scope="request">
-            <forward name="success" path="/pages/addNews.jsp"/>
+                scope="request"
+                parameter="deleteComment">
+        <forward name="success" path="/selectedNews.do"/>
+        </action>
+
+        <action path="/deleteNews"
+                type="epam.action.DispatchAction"
+                name="newsForm"
+                validate="false"
+                scope="request"
+                parameter="deleteNews">
+            <forward name="success" path="/pages/index.jsp"/>
+        </action>
+
+        <action path="/moveToEditPage"
+                type="epam.action.DispatchAction"
+                name="newsForm"
+                validate="false"
+                scope="request"
+                parameter="moveToEditPage">
+            <forward name="success" path="/pages/editNews.jsp"/>
+        </action>
+
+        <action path="/Locale"
+                type="epam.action.Internationalization"
+                parameter="method">
+            <forward name="success" path="/main.do"/>
         </action>
 
     </action-mappings>
 
-    <message-resources parameter="locale" />
+    <message-resources parameter="locale"/>
+
 
 </struts-config>

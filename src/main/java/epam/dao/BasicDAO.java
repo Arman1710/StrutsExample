@@ -1,13 +1,13 @@
 package epam.dao;
 
-import epam.dao.entity.Basic;
-import epam.dao.entity.Comments;
-import epam.dao.entity.News;
+import epam.model.entity.Basic;
 
 import java.util.List;
 
 public interface BasicDAO<T extends Basic> {
     List<T> read();
-    void update (T model);
+    void saveOrUpdate(T model);
     void delete (T model);
+    void create (T model);
+
 }

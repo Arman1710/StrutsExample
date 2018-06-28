@@ -1,6 +1,6 @@
 package epam.dao;
 
-import epam.dao.entity.News;
+import epam.model.entity.News;
 
 
 public interface NewsDAO extends BasicDAO<News> {

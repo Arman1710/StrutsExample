@@ -1,82 +1,90 @@
 package epam.services;
 
-import epam.dao.entity.Comments;
-import epam.dao.entity.News;
+import epam.converter.impl.CommentConverterImpl;
+import epam.converter.impl.NewsConverterImpl;
 import epam.dao.impl.NewsDAOImpl;
-import epam.form.CommentsForm;
-import epam.form.NewsForm;
+import epam.model.dto.CommentDTO;
+import epam.model.dto.NewsDTO;
+import epam.model.entity.Comment;
+import epam.model.entity.News;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 @Service
-public class NewsService{
+public class NewsService {
+
     @Autowired
-    NewsDAOImpl newsDAOImpl;
+    private NewsDAOImpl newsDAOImpl;
+    private NewsConverterImpl newsConverterImpl = new NewsConverterImpl();
+    private CommentConverterImpl commentImpl = new CommentConverterImpl();
+    private final static Logger LOGGER = Logger.getLogger(NewsService.class);
 
-    public NewsForm showAllNews( NewsForm newsForm){
-        List<News> newsList = newsDAOImpl.read();
-        for (News news: newsList){
-            newsForm.getNewsList().add(news);
-        }
-        return newsForm;
+    public List<News> showAllNews() {
+        LOGGER.trace("show all news");
+        return newsDAOImpl.read();
+
     }
 
-    public void apply (NewsForm newsForm, int newsId) {
-        News news = newsDAOImpl.findById(newsId);
-        newsForm.setNewsId(news.getNewsId());
-        newsForm.setShortDesc(news.getShortDesc());
-        newsForm.setFullDesc(news.getFullDesc());
-        for (Comments comments : news.getCommentsList()) {
-            newsForm.getCommentsList().add(comments);
-        }
+    public NewsDTO selectedNews(int newsId) {
+        LOGGER.info("selected news :" + newsId);
+        NewsDTO newsDTO = newsConverterImpl.entityToDTO(newsDAOImpl.findById(newsId));
+        LOGGER.trace("Show selected news");
+        LOGGER.info("News :" + newsId + " is selected");
+        return newsDTO;
     }
 
-    public void delete(int newsId) {
+
+    public void deleteNews(int newsId) {
+        LOGGER.info("delete news :" + newsId);
+
         newsDAOImpl.delete(newsDAOImpl.findById(newsId));
+
+        LOGGER.info("News :" + newsId + " is deleted");
     }
 
-    public void update(int newsId, int commentsId) {
-        News news = newsDAOImpl.findById(newsId);
-        for (Comments comments: news.getCommentsList()){
-            if(comments.getCommentsId() == commentsId) {
-                news.getCommentsList().remove(comments);
-                break;
+    public void deleteComment(final int newsId, final int commentId) {
+        LOGGER.info("delete news :" + commentId);
+        final News news = newsDAOImpl.findById(newsId);
+        final Iterator<Comment> itr = news.getCommentList().iterator();
+
+        while (itr.hasNext()) {
+            Comment comment = itr.next();
+            if (comment.getCommentId() == commentId) {
+                itr.remove();
             }
         }
-        newsDAOImpl.update(news);
+        newsDAOImpl.saveOrUpdate(news);
+        LOGGER.info("News :" + commentId + " is deleted");
     }
 
-    public void createComment (int newsId, CommentsForm commentsForm) {
+    public void createComment(int newsId, CommentDTO commentDTO) {
+        LOGGER.info("Creating comment :" + newsId);
+        Comment comment = commentImpl.DTOToEntity(commentDTO);
         News news = newsDAOImpl.findById(newsId);
-        Comments comments = new Comments();
-        comments.setAuthor(commentsForm.getAuthor());
-        comments.setDescription(commentsForm.getDescription());
-        comments.setDateCreated(commentsForm.getDateCreated());
-        comments.setNewsId(news.getNewsId());
-        news.getCommentsList().add(comments);
-        newsDAOImpl.update(news);
+        news.getCommentList().add(comment);
+        newsDAOImpl.saveOrUpdate(news);
+        LOGGER.trace("Comments :" + news + "is created");
     }
 
-    public void addNews (String newsId, NewsForm newsForm) {
-        if (newsId.isEmpty()) {
-            News news = new News();
-            news.setShortDesc(newsForm.getShortDesc());
-            news.setFullDesc(newsForm.getFullDesc());
-            newsDAOImpl.update(news);
-
-        } else {
-
-            News news = newsDAOImpl.findById(Integer.parseInt(newsId));
-            news.setShortDesc(newsForm.getShortDesc());
-            news.setFullDesc(newsForm.getFullDesc());
-            for (Comments comments : newsForm.getCommentsList()) {
-                news.getCommentsList().add(comments);
-            }
-            newsDAOImpl.update(news);
-        }
+    public void addNews(NewsDTO newsDTO) {
+        News news = newsConverterImpl.DTOToEntity(newsDTO);
+        newsDAOImpl.create(news);
+        LOGGER.trace("News :" + news.getTitle() + "is created");
     }
 
+    public void editNews(NewsDTO newsDTO, String newsId) {
+        LOGGER.info("Updating news :" + newsId);
+        News news = newsDAOImpl.findById(Integer.parseInt(newsId));
+        news.setContent(newsDTO.getContent());
+        news.setBrief(newsDTO.getBrief());
+        news.setTitle(newsDTO.getTitle());
+        newsDAOImpl.saveOrUpdate(news);
+        LOGGER.info("News :" + newsId + " is updated");
+    }
 }
+
 

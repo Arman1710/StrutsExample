@@ -33,43 +33,42 @@
         <bean:message key="mainPage"/>
     </html:link>
     <html:form action="/deleteNews">
-        <div class="jumbotron">
-            <div class="container">
-                <h1 class="display-3"><bean:message key="mainPage"/></h1>
-            </div>
-        </div>
-
-    <div class="row">
-        <div class="col-2">
-            <div class="container">
-                <p class="float-left">
-                    <a class="btn btn-primary btn-lg" href="/pages/addNews.jsp" role="button"><bean:message
-                            key="addNews"/></a><br><br>
-                    <a><button type="submit" class="btn btn-primary btn-lg"><bean:message key="removeNews"/></button></a>
-                </p>
-            </div>
-        </div>
-        <div class="col-10">
-            <div class="container">
-                <div class="row">
-                    <c:forEach items="${newsForm.newsList}" var="news">
-                        <div class="col-12">
-                            <h2>${news.title}</h2>
-                            <p>${news.brief}</p>
-                            <p class="float-right"><a class="btn btn-secondary" href="/selectedNews.do?newsId=${news.newsId}"
-                                  role="button"><bean:message key="open"/></a>
-                                <a><html:checkbox property="checkboxValue" value="${news.newsId}"/></a>
-                            </p>
-                        </div>
-                    </c:forEach>
-                </div>
-            </div>
-            <hr>
-        </div>
+    <div class="jumbotron">
+        <div class="container">
+            <h1 class="display-3"><bean:message key="mainPage"/></h1>
         </div>
     </div>
+
+    <div class="container">
+        <div class="row">
+            <c:forEach items="${newsForm.newsList}" var="news">
+                <div class="col-md-4">
+                    <h2>${news.title}</h2>
+                    <p>${news.brief}</p>
+                    <p><a class="btn btn-secondary" href="/selectedNews.do?newsId=${news.newsId}"
+                          role="button"><bean:message key="open"/> &raquo;</a>
+                        <a><html:checkbox property="checkboxValue" value="${news.newsId}"/></a>
+                    </p>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+    <hr>
+    </div>
+
+
+
 </main>
+
+<div class="container">
+    <p class="float-left">
+        <a class="btn btn-primary btn-lg" href="/pages/addNews.jsp" role="button"><bean:message
+                key="addNews"/>&raquo;</a><br><br>
+        <a><button type="submit" class="btn btn-primary btn-lg"><bean:message key="removeNews"/>&raquo;</button></a>
+    </p>
+</div>
 </html:form>
+
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">

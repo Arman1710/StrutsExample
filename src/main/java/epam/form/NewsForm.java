@@ -1,54 +1,74 @@
 package epam.form;
 
-import epam.dao.entity.Comments;
-import epam.dao.entity.News;
+import epam.model.entity.News;
+import org.apache.log4j.Logger;
 import org.apache.struts.action.ActionErrors;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 public class NewsForm extends ActionForm {
+    private static Logger log = Logger.getLogger(NewsForm.class);
     private List<News> newsList = new ArrayList<>();
-    private String shortDesc;
-    private String fullDesc;
+    private String title;
+    private String brief;
+    private String content;
     private String error;
     private int newsId;
-    private List<Comments> commentsList = new ArrayList<>();
+    private List<CommentForm> commentList = new ArrayList<>();
+    private String [] checkboxValue;
 
     @Override
     public ActionErrors validate(ActionMapping mapping, HttpServletRequest request) {
         ActionErrors errors = new ActionErrors();
-        if (getShortDesc() == null || ("".equals(getShortDesc()))) {
-            errors.add("shortDesc_err",
-                    new ActionMessage("error.required.shortDesc"));
+
+        if (StringUtils.isEmpty(getTitle())) {
+            errors.add("title_err",
+                    new ActionMessage("error.required.title"));
+            log.error("title is empty");
         }
 
-        if (getFullDesc() == null || ("".equals(getFullDesc()))) {
-            errors.add("fullDesc_err",
-                    new ActionMessage("error.required.fullDesc"));
+        if (StringUtils.isEmpty(getBrief())) {
+            errors.add("brief_err",
+                    new ActionMessage("error.required.brief"));
+            log.error("brief is empty");
+        }
+
+        if (StringUtils.isEmpty(getContent())) {
+            errors.add("content_err",
+                    new ActionMessage("error.required.content"));
+            log.error("content  is empty");
         }
         return errors;
     }
 
-
-    public String getShortDesc() {
-        return shortDesc;
+    public String getTitle() {
+        return title;
     }
 
-    public void setShortDesc(String shortDesc) {
-        this.shortDesc = shortDesc;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getFullDesc() {
-        return fullDesc;
+    public String getBrief() {
+        return brief;
     }
 
-    public void setFullDesc(String fullDesc) {
-        this.fullDesc = fullDesc;
+    public void setBrief(String brief) {
+        this.brief = brief;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public String getError() {
@@ -67,12 +87,12 @@ public class NewsForm extends ActionForm {
         this.newsId = newsId;
     }
 
-    public List<Comments> getCommentsList() {
-        return commentsList;
+    public List<CommentForm> getCommentList() {
+        return commentList;
     }
 
-    public void setCommentsList(List<Comments> commentsList) {
-        this.commentsList = commentsList;
+    public void setCommentList(List<CommentForm> commentList) {
+        this.commentList = commentList;
     }
 
     public List<News> getNewsList() {
@@ -81,6 +101,14 @@ public class NewsForm extends ActionForm {
 
     public void setNewsList(List<News> newsList) {
         this.newsList = newsList;
+    }
+
+    public String[] getCheckboxValue() {
+        return checkboxValue;
+    }
+
+    public void setCheckboxValue(String[] checkboxValue) {
+        this.checkboxValue = checkboxValue;
     }
 }
 
